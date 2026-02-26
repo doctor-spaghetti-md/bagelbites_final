@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "updatedAt": "2026-02-26T00:00:00Z",
+
+  "pending": [
+    {
+      "id": "rev_0001",
+      "createdAt": "2026-02-26T00:00:00Z",
+      "status": "pending",
+
+      "restaurantId": "cracker-barrel",
+      "restaurantName": "Cracker Barrel",
+
+      "author": "anonymous",
+      "rating": 3.5,
+
+      "text": "The biscuits were emotionally supportive but the lighting made me confront my life choices.",
+
+      "photos": [
+        {
+          "type": "url",
+          "value": "./img/reviews/example1.jpg"
+        }
+      ],
+
+      "meta": {
+        "ip": null,
+        "userAgent": null
+      }
+    },
+
+    {
+      "id": "rev_0002",
+      "createdAt": "2026-02-26T00:00:00Z",
+      "status": "pending",
+
+      "restaurantId": "cracker-barrel",
+      "restaurantName": "Cracker Barrel",
+
+      "author": "anonymous",
+      "rating": 4.0,
+
+      "text": "piss",
+
+      "photos": [
+        { "type": "url", "value": "./img/cb2.jpg" },
+        { "type": "url", "value": "./img/cb3.jpg" }
+      ],
+
+      "meta": {
+        "ip": null,
+        "userAgent": null
+      }
+    }
+  ],
+
+  "approved": [
+    {
+      "id": "rev_0000",
+      "createdAt": "2026-02-20T00:00:00Z",
+      "approvedAt": "2026-02-21T00:00:00Z",
+      "status": "approved",
+
+      "restaurantId": "cracker-barrel",
+      "restaurantName": "Cracker Barrel",
+
+      "author": "kat",
+      "rating": 3.0,
+
+      "text": "piss",
+
+      "photos": [        { "type": "url", "value": "./img/cb.jpg" },
+            { "type": "url", "value": "./img/cb6.jpg" },
+                { "type": "url", "value": "./img/cb5.jpg" },
+                    { "type": "url", "value": "./img/cb4.jpg" }],
+
+      "ownerResponse": null,
+
+      "votes": {
+        "useful": 0,
+        "funny": 2,
+        "cool": 1
+      },
+
+      "flags": []
+    },
+        {
+      "id": "rev_0001",
+      "createdAt": "2026-02-20T00:00:00Z",
+      "approvedAt": "2026-02-21T00:00:00Z",
+      "status": "approved",
+
+      "restaurantId": "cracker-barrel",
+      "restaurantName": "Cracker Barrel",
+
+      "author": "matt gaetz",
+      "rating": 2.0,
+
+      "text": "piss",
+
+      "photos": [                { "type": "url", "value": "./img/cb2.jpg" },
+        { "type": "url", "value": "./img/cb3.jpg" }],
+
+      "ownerResponse": null,
+
+      "votes": {
+        "useful": 0,
+        "funny": 2,
+        "cool": 1
+      },
+
+      "flags": []
+    }
+  ],
+
+  "rejected": []
+}

@@ -1,0 +1,414 @@
+/* =========================================================
+   RESTAURANT PAGE
+   Mobile: stack
+   Desktop: Main (left) + Sidebar (right)
+   Adds: bigger map, slimmer hero, desktop corner map card
+   ========================================================= */
+
+.muted{ color: var(--muted); }
+.h2{ margin:0 0 10px; font-weight:1000; letter-spacing:-.3px; }
+.pad{ padding: 14px; }
+.padTop{ padding: 12px 14px 14px; }
+
+/* crumbs */
+.crumbs{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  font-size: 13px;
+  min-width: 0;
+}
+.crumbs a:hover{ text-decoration: underline; }
+.crumbs span{ white-space: nowrap; }
+#crumbName{
+  min-width:0;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+/* HERO */
+.hero{
+  position: relative;
+  height: 320px; /* slimmer than before */
+  overflow:hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 640px){
+  .hero{ height: 360px; } /* keep your mobile feeling */
+}
+
+.heroImg{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  transform: scale(1.04);
+  filter: saturate(1.18) contrast(1.06);
+  z-index: 0;
+}
+
+.heroOverlay{
+  position:absolute;
+  inset:0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255,47,179,.12), rgba(0,0,0,.60)),
+    radial-gradient(600px 260px at 20% 20%, rgba(36,214,255,.25), transparent 60%),
+    radial-gradient(600px 260px at 80% 15%, rgba(61,255,181,.20), transparent 60%);
+}
+
+.heroInner{
+  position: relative;
+  z-index: 2;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  padding-bottom: 16px;
+}
+
+.heroCard{
+  width: min(980px, 100%);
+  color:#fff;
+  padding-right: 0;
+}
+
+.heroTitle{
+  margin:0;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 1000;
+  letter-spacing: -.8px;
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.22),
+    0 10px 30px rgba(0,0,0,.35);
+}
+
+.heroMeta{
+  margin-top: 6px;
+  color: rgba(255,255,255,.86);
+}
+
+.heroRatingRow{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 12px;
+  align-items:center;
+  margin-top: 12px;
+}
+
+.ratingBlock{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  background: rgba(255,255,255,.14);
+  border: 1px solid rgba(255,255,255,.24);
+  padding: 10px 12px;
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 16px 50px rgba(0,0,0,.18);
+}
+
+.ratingText{ display:flex; align-items:baseline; gap: 8px; }
+.ratingText strong{ font-size: 18px; }
+.heroActions{
+  display:flex;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+/* Desktop corner map in hero */
+.heroMapCard{
+  position: absolute;
+  top: calc(var(--topbarH) + 12px);
+  right: 16px;
+  width: 300px;
+  border-radius: 18px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 22px 80px rgba(0,0,0,.30);
+  z-index: 3;
+}
+
+.heroMapTop{
+  display:flex;
+  justify-content:space-between;
+  gap: 10px;
+  align-items:center;
+  padding: 10px 12px;
+  color: rgba(255,255,255,.90);
+  font-size: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.20);
+}
+.heroMapLabel{ font-weight: 1000; letter-spacing: .2px; }
+.heroMapHint{ opacity: .85; }
+
+.heroMap{
+  height: 210px;
+  background: #f2f2ff;
+}
+
+/* Hide hero corner map on mobile to preserve your current mobile flow */
+@media (max-width: 860px){
+  .heroMapCard{ display:none; }
+}
+
+/* BODY GRID */
+.detailGrid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 16px 0 26px;
+  align-items:start;
+}
+.detailMain{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+}
+.detailSideRight{ min-width:0; }
+
+/* Desktop */
+@media (min-width: 980px){
+  .detailGrid{
+    grid-template-columns: 1fr minmax(340px, 28vw);
+    gap: 16px;
+  }
+  .stickySide{
+    position: sticky;
+    top: var(--topbarH);
+    align-self: start;
+    max-height: calc(100vh - (var(--topbarH) + 18px));
+    overflow:auto;
+    padding-bottom: 10px;
+  }
+}
+
+/* Highlights */
+.highlightGrid{ display:grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 760px){
+  .highlightGrid{ grid-template-columns: 1fr 1fr; }
+}
+
+.highlight{
+  display:flex;
+  gap: 12px;
+  align-items:flex-start;
+  padding: 12px;
+  border: 1px solid rgba(30,40,70,.16);
+  border-radius: 16px;
+  background: rgba(255,255,255,.92);
+  box-shadow: var(--shadow2);
+}
+.hiIcon{
+  width: 40px;
+  height: 40px;
+  display:grid;
+  place-items:center;
+  border-radius: 14px;
+  border: 1px solid rgba(30,40,70,.16);
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.82));
+  font-size: 18px;
+}
+.hiTitle{ font-weight: 1000; margin-bottom: 2px; }
+
+/* Amenities */
+.amenityGrid{ display:grid; grid-template-columns: 1fr; gap: 8px; }
+.amenity{
+  padding: 10px 12px;
+  border: 1px solid rgba(30,40,70,.16);
+  border-radius: 14px;
+  background: rgba(255,255,255,.92);
+  color:#3b3f52;
+  font-size: 13px;
+  box-shadow: var(--shadow2);
+}
+
+/* Bigger mini map (your request) */
+.miniMap{
+  height: 300px; /* was 220 */
+  border-radius: 16px;
+  border: 1px solid rgba(30,40,70,.16);
+  overflow:hidden;
+  box-shadow: var(--shadow2);
+  background:#f2f2ff;
+}
+@media (max-width: 640px){
+  .miniMap{ height: 340px; } /* a little extra on phones */
+}
+.miniMap .leaflet-tile,
+.heroMap .leaflet-tile{
+  filter: hue-rotate(330deg) saturate(2.25) contrast(1.18) brightness(1.10);
+}
+
+/* Photos */
+.photoStrip{ overflow:auto; padding: 12px; }
+.photoRow{ display:flex; gap: 12px; align-items:flex-start; }
+.photoItem{ width: 220px; flex: 0 0 auto; margin: 0; }
+.photoItem img{
+  width:100%;
+  height: 140px;
+  object-fit:cover;
+  border-radius: 16px;
+  border: 1px solid rgba(30,40,70,.16);
+  background:#f2f2ff;
+}
+.photoItem figcaption{ margin-top: 6px; font-size: 12px; color: var(--muted); }
+
+/* Breakdown */
+.breakdown{ display:flex; flex-direction:column; gap: 10px; }
+.bdRow{
+  display:grid;
+  grid-template-columns: 60px 1fr 36px;
+  gap: 10px;
+  align-items:center;
+}
+.bdLabel{ font-size: 13px; font-weight: 1000; }
+.bdBar{
+  height: 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(30,40,70,.18);
+  background: rgba(255,255,255,.85);
+  overflow:hidden;
+}
+.bdFill{ height:100%; background: var(--neonGrad); }
+.bdCount{ font-size: 12px; text-align:right; color: var(--muted); }
+
+/* Reviews */
+.reviewsHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.reviewControls{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 10px;
+  align-items:center;
+}
+
+/* Review card layout: avatar + content */
+.review{
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+/* The content column must be allowed to shrink/expand */
+.review > div:last-child{
+  min-width: 0;
+}
+.avatar{
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,47,179,.18);
+  object-fit: cover;
+  background:#f2f2ff;
+  box-shadow: var(--shadow2);
+}
+
+.reviewTop{
+  display:flex;
+  justify-content:space-between;
+  gap: 12px;
+  align-items:flex-start;
+  flex-wrap: wrap;
+}
+.reviewName{ font-weight: 1000; }
+.reviewText{
+  margin: 10px 0 0;
+  color:#3b3f52;
+  line-height: 1.55;
+  font-size: 14px;
+}
+.reviewRating{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.rvPhotos{
+  display:flex;
+  gap: 10px;
+  margin-top: 10px;
+  overflow:auto;
+  padding-bottom: 6px;
+}
+.rvPhotos img{
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(30,40,70,.16);
+  background:#f2f2ff;
+}
+
+/* Bagelhole Review */
+.bagelholeHeader{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bagelholeBadge{
+  font-size: 12px;
+  font-weight: 1000;
+  letter-spacing: .2px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(20,30,60,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.80));
+}
+
+.bagelholeDek{
+  margin: 6px 0 12px;
+  color: rgba(20,30,60,.76);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.bagelholeBody{
+  color:#3b3f52;
+  line-height: 1.65;
+  font-size: 14px;
+}
+
+.bagelholeBody p{
+  margin: 0 0 12px;
+}
+
+.bagelholeBody p:last-child{ margin-bottom: 0; }
+
+.bagelholeSig{
+  margin-top: 14px;
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.sigLine{
+  flex:1;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--neonGrad);
+  opacity: .85;
+}
+
+.sigText{
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(20,30,60,.70);
+  white-space: nowrap;
+}

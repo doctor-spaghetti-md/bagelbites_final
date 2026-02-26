@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelbites • Restaurants</title>
+  <meta name="description" content="Bagelhole: a colorful, map-first restaurant review ecosystem." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Frijole&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Bungee&display=swap" rel="stylesheet">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="./index.html" aria-label="Bagelhole home">
+        <!-- <span class="dot" aria-hidden="true"></span> -->
+        <div>
+          <div class="name">bagelbites</div>
+        </div>
+      </a>
+
+      <div class="headerActions">
+        <a class="rainbowReviewBtn" href="./assets/writereview.html">✍️ Write a Review</a>
+        <a class="neonSuggestBtn" href="./assets/suggestion.html">+ Submit a Restaurant Suggestion</a>
+
+        <button class="pillBtn mobileOnly" id="btnOpenFilters" type="button">🧪 Filters</button>
+        <button class="pillBtn mobileOnly" id="btnOpenMap" type="button">🗺️ Map</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Desktop layout -->
+  <main class="appShell" role="main">
+
+    <!-- Filters -->
+    <aside class="panel sidebar" id="filterSidebar" aria-label="Filters">
+      <div class="pad muted">Loading filters…</div>
+    </aside>
+
+    <!-- Results column: header + scroll list + sticky footer pager -->
+    <section class="panel resultsPane" aria-label="Restaurant results">
+      <div class="resultsHeader">
+        <div class="resultsTitle">Restaurants</div>
+        <!-- <div class="resultsSub muted" id="resultsSub">Loading…</div> -->
+      </div>
+
+      <!-- THIS is the only scrolling region -->
+      <div class="resultsScroll" id="resultsScroll">
+        <div id="resultsList" aria-live="polite">
+          <div class="pad muted">Loading restaurants…</div>
+        </div>
+      </div>
+
+      <!-- Pager sits at bottom of the panel -->
+      <div class="pager" aria-label="Pagination controls">
+        <button id="btnPrev" type="button">← Prev</button>
+        <div class="meta" id="pageMeta">Page 1</div>
+        <button id="btnNext" type="button">Next →</button>
+      </div>
+    </section>
+
+    <!-- Map -->
+    <aside class="panel mapWrap" aria-label="Map">
+      <div id="map"></div>
+    </aside>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div>© <span id="year"></span> Piss in my pants publications.</div>
+      <div>no wrongs deserved, all wrongs acknowledged P.I.M.P.P</div>
+    </div>
+  </footer>
+
+  <!-- Mobile overlays -->
+  <div class="mobileOverlay" id="mobileFilters" aria-hidden="true">
+    <div class="mobileSheet" role="dialog" aria-label="Filters">
+      <div class="mobileSheetHeader">
+        <div class="title">Filters</div>
+        <button class="close" type="button" data-close>Close</button>
+      </div>
+      <div class="mobileSheetBody">
+        <div id="mobileFiltersBody" class="muted">Loading filters…</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobileOverlay" id="mobileMap" aria-hidden="true">
+    <div class="mobileSheet" role="dialog" aria-label="Map">
+      <div class="mobileSheetHeader">
+        <div class="title">Map</div>
+        <button class="close" type="button" data-close>Close</button>
+      </div>
+      <div class="mobileSheetBody" style="padding:0;">
+        <div id="mobileMapInner" style="height:100%;min-height:420px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/app.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

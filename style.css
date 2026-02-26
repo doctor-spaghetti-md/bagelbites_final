@@ -1,0 +1,1892 @@
+/* =========================================================
+   style.css (FULL CLEAN + FIXED PAGER)
+   Bagelhole Restaurant Review Ecosystem
+   - Desktop: sticky filter rail (left), ONLY results list scrolls (center),
+              sticky map (right), pager pinned to bottom of center panel
+   - Mobile: list-only, Filters + Map as overlays
+   - Restaurant page styles included
+   - Galaxy glitter background + neon CTAs
+   ========================================================= */
+
+/* ---------- Google fonts (optional; safe if already in HTML) ---------- */
+@import url("https://fonts.googleapis.com/css2?family=Frijole&family=Bungee&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root{
+  /* core */
+  --bg: #09050f;
+  --panel: rgba(255,255,255,.07);
+  --panel2: rgba(255,255,255,.10);
+  --line: rgba(255,255,255,.14);
+  --ink: #f7f2ff;
+  --muted: rgba(247,242,255,.72);
+
+  /* neon */
+  --pink: #ff4fd8;
+  --hotpink: #ff2fbf;
+  --aqua: #38f6ff;
+  --lime: #baff3a;
+  --sun: #ffd34a;
+  --violet: #7a00ff;
+
+  /* sizing */
+  --r: 18px;
+  --r2: 24px;
+  --shadow: 0 18px 60px rgba(0,0,0,.35);
+  --shadow2: 0 10px 28px rgba(0,0,0,.28);
+
+  /* layout */
+  --headerH: 85px;
+  --footerH: 64px;
+  --gap: 14px;
+
+  /* fonts */
+  --font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --display: "Bungee", system-ui, sans-serif;
+  --brand: "Frijole", system-ui, sans-serif;
+
+  /* restaurant page can override this via JS */
+  --restaurantFont: var(--display);
+}
+
+*{ box-sizing:border-box; }
+html, body{ height:100%; }
+
+body{
+  margin:0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 700px at 15% -10%, rgba(255,79,216,.28), transparent 55%),
+    radial-gradient(900px 600px at 85% 0%, rgba(56,246,255,.20), transparent 55%),
+    radial-gradient(900px 700px at 60% 115%, rgba(186,255,58,.12), transparent 55%),
+    linear-gradient(180deg, #0a0611 0%, #070410 100%);
+  overflow-x:hidden;
+}
+
+/* Subtle glitter overlay */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.18;
+  mix-blend-mode:screen;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,.9) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,.7) 1px, transparent 2px),
+
+    radial-gradient(circle, rgba(255,79,216,.9) 1px, transparent 2px),
+    radial-gradient(circle, rgba(56,246,255,.85) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,211,74,.9) 1px, transparent 2px),
+    radial-gradient(circle, rgba(186,255,58,.75) 1px, transparent 2px),
+    radial-gradient(circle, rgba(122,0,255,.75) 1px, transparent 2px),
+
+    radial-gradient(circle, rgba(255,255,255,.5) 2px, transparent 4px),
+    radial-gradient(circle, rgba(255,79,216,.55) 2px, transparent 4px),
+    radial-gradient(circle, rgba(56,246,255,.45) 2px, transparent 4px),
+
+    radial-gradient(circle at 20% 30%, rgba(255,79,216,.14), transparent 40%),
+    radial-gradient(circle at 75% 20%, rgba(56,246,255,.12), transparent 45%),
+    radial-gradient(circle at 60% 80%, rgba(186,255,58,.08), transparent 50%);
+
+  background-size:
+    140px 140px,
+    230px 230px,
+    180px 180px,
+    270px 270px,
+    200px 200px,
+    330px 330px,
+    410px 410px,
+    320px 320px,
+    520px 520px,
+    440px 440px,
+    cover,
+    cover,
+    cover;
+
+  background-position:
+    0 0,
+    40px 60px,
+    120px 30px,
+    200px 140px,
+    80px 180px,
+    260px 40px,
+    340px 220px,
+    180px 260px,
+    60px 320px,
+    300px 120px,
+    center,
+    center,
+    center;
+}
+
+/* ---------- a11y ---------- */
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  border:0;
+}
+
+a{ color:inherit; }
+a:hover{ text-decoration:none; }
+
+button, input, select{
+  font-family: inherit;
+  color: inherit;
+}
+
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index: 50;
+  min-height: var(--headerH);
+  height: auto;
+  padding: 10px 0;
+  display:flex;
+  align-items:center;
+  background:
+    linear-gradient(90deg, rgba(255,79,216,.22), rgba(56,246,255,.14), rgba(186,255,58,.10));
+  border-bottom: 1px solid rgba(255,255,255,.16);
+  backdrop-filter: blur(14px);
+}
+
+.topbar .wrap{
+  width:min(1280px, calc(100% - 24px));
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+}
+
+/* Desktop header layout */
+@media (min-width: 981px){
+  .topbar{ height: var(--headerH); padding: 0; }
+
+  .topbar .wrap{
+    width: calc(100% - 24px);
+    max-width: none;
+    margin: 0 12px;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+  .headerActions{
+    margin-left: auto;
+    justify-content: flex-end;
+  }
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  text-decoration:none;
+  flex: 0 0 auto;
+}
+
+.brand .dot{
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, #fff 0 20%, var(--pink) 35%, var(--violet) 100%);
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,.10),
+    0 0 22px rgba(255,79,216,.55),
+    0 0 18px rgba(56,246,255,.25);
+}
+
+.brand .name{
+  font-family: var(--brand);
+  letter-spacing: 1.3px;
+  font-size: 72px;
+  line-height:1;
+  text-shadow:
+  0 2px 0 rgba(0,0,0,.6),      /* subtle depth */
+  1px 1px 0 rgba(0,0,0,.7),
+  -1px 1px 0 rgba(0,0,0,.7),
+  1px -1px 0 rgba(0,0,0,.7),
+  -1px -1px 0 rgba(0,0,0,.7),
+  0 0 10px rgba(0,0,0,.6),
+    0 6px 0 rgba(255, 50, 245, 0.85),
+    0 0 25px rgba(0, 224, 206, 0.55);
+}
+
+.headerActions{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+
+.pillBtn{
+  border: 1px solid rgba(255,255,255,.20);
+  background: rgba(255,255,255,.08);
+  padding: 10px 12px;
+  border-radius: 999px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap: 8px;
+  transition: transform .12s ease, background .12s ease, border-color .12s ease;
+  box-shadow: 0 10px 28px rgba(0,0,0,.25);
+  text-decoration:none;
+}
+.pillBtn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.11);
+  border-color: rgba(255,79,216,.35);
+}
+.pillBtn:active{ transform: translateY(0); }
+
+.successCard{
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+}
+.successCard .title{
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+.successPreview{
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+}
+/* =========================================================
+   MAIN LAYOUT (INDEX)
+   ========================================================= */
+.appShell{
+  height: calc(100vh - var(--headerH) - var(--footerH));
+  display:grid;
+  grid-template-columns: 320px .95fr 1.05fr;
+  gap: var(--gap);
+  padding: var(--gap);
+  width: min(1400px, 100%);
+  margin: 0 auto;
+}
+
+/* full-bleed feel */
+@media (min-width: 1400px){
+  .appShell{ width: calc(100% - 18px); }
+}
+
+/* Panels */
+.panel{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--r2);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+/* Sticky filter + sticky map */
+.sidebar{
+  position: sticky;
+  top: calc(var(--headerH) + var(--gap));
+  height: calc(100vh - var(--headerH) - var(--footerH) - (var(--gap) * 2));
+  overflow:auto;
+}
+
+.mapWrap{
+  position: sticky;
+  top: calc(var(--headerH) + var(--gap));
+  height: calc(100vh - var(--headerH) - var(--footerH) - (var(--gap) * 2));
+  overflow:hidden;
+}
+
+/* =========================================================
+   RESULTS COLUMN: optional header + scroll list + bottom pager
+   ========================================================= */
+.resultsPane{
+  height: calc(100vh - var(--headerH) - var(--footerH) - (var(--gap) * 2));
+  border-radius: var(--r2);
+
+  display:flex;
+  flex-direction: column;
+
+  overflow: hidden;
+  padding: 0;
+}
+
+/* If you ever add a header inside resultsPane, these are ready */
+.resultsHeader{
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.12);
+}
+.resultsTitle{
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing:2px;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow:2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000,
+
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 22px rgba(255,79,216),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(255, 56, 228, 0.7);
+}
+.resultsSub{
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* THIS is the only scroll area on desktop */
+.resultsScroll{
+  overflow: auto;
+  padding: 12px;
+  flex: 1 1 auto;
+  min-height: 0; /* important for flex scroll areas */
+}
+.neonInput{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+
+  background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.18);
+
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+
+  transition:
+    border-color .25s ease,
+    box-shadow .25s ease,
+    text-shadow .25s ease,
+    background .25s ease;
+}
+
+/* Placeholder */
+.neonInput::placeholder{
+  color: rgba(255,255,255,.45);
+  opacity: 1;
+}
+
+/* Focus = the glow moment */
+.neonInput:focus{
+  outline: none;
+
+  background: rgba(0,0,0,.55);
+  border-color: rgba(255,79,216,.75);
+
+  box-shadow:
+    0 0 0 2px rgba(255,79,216,.15),
+    0 0 18px rgba(255,79,216,.35),
+    inset 0 0 12px rgba(0,0,0,.6);
+
+  text-shadow:
+    0 0 6px rgba(255,79,216,.35);
+}
+
+.neonInput:not(:placeholder-shown){
+  text-shadow: 0 0 6px rgba(255,79,216,.25);
+}
+/* ---------- filter block styles ---------- */
+.filterBlock{ padding: 14px; }
+
+.filterTitle{
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing:2px;
+  margin-bottom: 10px;
+  color: #fff;
+  text-shadow:2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000,
+
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 22px rgba(255,79,216),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(255, 56, 228, 0.7);
+}
+
+.filterLabel{
+  display:block;
+  font-size: 12px;
+  color: var(--muted);
+  margin: 12px 0 6px;
+  letter-spacing:.2px;
+}
+.photoHelp{
+  display: block;
+  margin-top: 12px;
+  margin-bottom: 25px;
+}
+.filterInput,
+
+
+.filterSelect{
+  width:100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0, 0, 0, 0.548);
+  padding: 11px 12px;
+  outline:none;
+  transition: border-color .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.filterInput:focus,
+.filterSelect:focus{
+  border-color: rgba(255,79,216,.55);
+  box-shadow: 0 0 0 3px rgba(255,79,216,.18);
+  background: rgba(0,0,0,.32);
+}
+
+.filterSelect option{
+  background: #110610;
+  color: #fff;
+}
+
+.filterRow{
+  display:flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap:wrap;
+}
+
+.check{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+    font-family: var(--font);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing:2px;
+  margin-bottom: 10px;
+  color: #ffffffea;
+  text-shadow:
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 22px rgba(255,79,216),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(255, 56, 228, 0.7);
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  cursor:pointer;
+  user-select:none;
+}
+.check input{ accent-color: var(--pink); }
+
+.filterActions{
+  margin-top: 14px;
+  display:flex;
+  gap: 10px;
+}
+
+.btn{
+  width:100%;
+  border: 1px solid rgba(255,255,255,.22);
+  background: linear-gradient(90deg, rgba(255,79,216,.25), rgba(56,246,255,.16));
+  padding: 12px 12px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight: 800;
+  text-shadow:2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000,
+
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 22px rgba(255,79,216),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(255, 56, 228, 0.7);
+  letter-spacing:.2px;
+  box-shadow: 0 12px 26px rgba(0,0,0,.25);
+  transition: transform .12s ease, filter .12s ease, border-color .12s ease;
+}
+.btn:hover{
+  transform: translateY(-5px);
+  border: rgba(255, 57, 212, 0.767);
+  box-shadow:
+    0 0 0 2px rgba(255, 57, 212, 0.35),
+    0 0 18px rgba(255, 57, 212, 0.6);
+}
+.btn:active{ transform: translateY(0); filter: brightness(.98); }
+
+
+
+/* =========================================================
+   RESTAURANT CARDS (INDEX)
+   ========================================================= */
+.rCard{
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+  border-radius: var(--r2);
+  overflow:hidden;
+  box-shadow: var(--shadow2);
+  margin-bottom: 12px;
+}
+
+.rLink{
+  display:grid;
+  grid-template-columns: 160px 1fr;
+  text-decoration:none;
+  color: inherit;
+}
+
+.rThumb{
+  min-height: 140px;
+  background-size: cover;
+  background-position:center;
+  position:relative;
+}
+.rThumb::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.06), rgba(0,0,0,.35));
+}
+
+.rBody{
+  padding: 12px 14px;
+  display:flex;
+  flex-direction:column;
+  gap: 8px;
+}
+
+.rTop{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 10px;
+}
+
+.rName{
+  font-family: var(--font);
+  font-weight: 900;
+  font-size: 28px;
+text-shadow:
+  /* --- THICK BLACK OUTLINE (stroke) --- */
+  2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000;
+}
+.rPrice{
+  font-weight: 500;
+  color: rgba(255,255,255,.92);
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(0,0,0,.22);
+  white-space:nowrap;
+}
+
+.rMeta{
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.rBlurb{
+  font-size: 16px;
+  line-height:1.35;
+  color: rgba(255,255,255,.90);
+}
+
+.rTags{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.tag{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: linear-gradient(90deg, rgba(255, 79, 217, 0.342), rgba(56, 245, 255, 0.356));
+  color: rgba(255,255,255,.92);
+}
+
+.rCard:hover{
+  transform: translateY(-5px);
+  border: rgba(255, 57, 212, 0.767);
+  box-shadow:
+    0 0 0 2px rgba(255, 57, 212, 0.35),
+    0 0 18px rgba(255, 57, 212, 0.6);
+}
+.rCard:hover .rName{
+text-shadow:
+  /* --- THICK BLACK OUTLINE (stroke) --- */
+  2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000,
+
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 10px rgba(255,79,216,.9),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(56,246,255,.7);
+}
+
+/* ---------- empty state ---------- */
+.emptyState{
+  border: 1px dashed rgba(255,255,255,.20);
+  background: rgba(255,255,255,.05);
+  border-radius: var(--r2);
+  padding: 18px;
+  color: var(--muted);
+}
+
+/* =========================================================
+   PAGER (BOTTOM OF RESULTS PANEL)
+   ========================================================= */
+.pager{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+
+  padding: 14px 18px;
+
+  border-top: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+
+.pager .meta{
+  color: rgba(255, 59, 239, 0.75);
+  font-size: 12px;
+  text-align:center;
+  flex: 1 1 auto;
+}
+
+.pager button{
+  border: 1px solid rgba(255,255,255,.20);
+  background: rgba(255,255,255,.08);
+  color: inherit;
+  padding: 10px 14px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight: 900;
+  min-width: 104px;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease, background .12s ease;
+}
+.pager button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+  filter: grayscale(.25);
+}
+
+/* ✅ NEXT is pink ONLY when enabled */
+#btnNext:not(:disabled){
+  background: linear-gradient(90deg, rgba(255,79,216,.55), rgba(255,47,191,.35));
+  border-color: rgba(255,79,216,.65);
+  box-shadow:
+    0 0 0 3px rgba(255,79,216,.14),
+    0 0 22px rgba(255,79,216,.22);
+}
+#btnNext:not(:disabled):hover{
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 4px rgba(255,79,216,.16),
+    0 0 30px rgba(255,79,216,.30);
+}
+#btnNext:not(:disabled):active{
+  transform: translateY(0);
+  filter: brightness(.98);
+}
+
+/* Optional: make Prev subtle-blue when enabled */
+#btnPrev:not(:disabled){
+  border-color: rgba(56,246,255,.25);
+}
+#btnPrev:not(:disabled):hover{
+  transform: translateY(-1px);
+  border-color: rgba(56,246,255,.40);
+  box-shadow: 0 0 0 3px rgba(56,246,255,.10);
+}
+
+/* ---------- map ---------- */
+#map{ width:100%; height:100%; }
+
+/* Leaflet theming */
+.leaflet-container{
+  background: rgba(0,0,0,.18);
+  font-family: var(--font);
+}
+.leaflet-control-zoom a{
+  background: rgba(122,0,255,.55);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.14);
+}
+.leaflet-control-zoom a:hover{ background: rgba(255,79,216,.22); }
+
+.leaflet-popup-content-wrapper{
+  background: rgba(10,6,17,.92);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: var(--shadow2);
+  border-radius: 16px;
+}
+.leaflet-popup-tip{ background: rgba(10,6,17,.92); }
+
+.mapPop{ font-family: var(--font); }
+.mapPopName{ font-weight: 900; letter-spacing:.2px; margin-bottom: 2px; }
+.mapPopMeta{ color: rgba(255,255,255,.75); font-size: 12px; margin-bottom: 8px; }
+.mapPopLink{
+  display:inline-flex;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,79,216,.16);
+  text-decoration:none;
+  font-weight: 900;
+}
+
+/* =========================================
+   ONE-SHAPE Pink Pushpin (teardrop silhouette)
+   ========================================= */
+/* =========================================
+   Compact Neon Pushpin (smaller + solid tip)
+   ========================================= */
+
+/* =========================================
+   Rainbow Pushpin (smooth, no center dot)
+   ========================================= */
+
+/* =========================================
+   Neon Galaxy Pushpin
+   Pink • Purple • Blue • Aqua • Yellow
+   Solid border, no center dot
+   ========================================= */
+
+.y2kPin{
+  position: relative;
+  width: 26px;
+  height: 40px;
+  filter:
+    drop-shadow(0 8px 16px rgba(0,0,0,.45))
+    drop-shadow(0 0 18px rgba(0, 0, 0, 0.55));
+}
+
+.y2kPin .pinCore{
+  position: absolute;
+  inset: 0;
+
+  /* Pin shape */
+  clip-path: path("M13 1.5 C19 1.5 24 6.5 24 12.5 C24 21 13 38 13 38 C13 38 2 21 2 12.5 C2 6.5 7 1.5 13 1.5 Z");
+
+  /* Controlled neon palette */
+  background: conic-gradient(
+    #ff4fd8,   /* hot pink */
+    #ff2fbf,
+    #7a00ff,   /* purple */
+    #3b5bff,   /* electric blue */
+    #38f6ff,   /* aqua */
+    #ffd34a,   /* yellow accent */
+    #ff4fd8
+  );
+
+  /* SOLID clean border */
+border: 2px solid #0a0611;   /* deep near-black */
+
+box-shadow:
+  0 0 0 1px rgba(0,0,0,.8),     /* hard dark edge */
+  0 0 0 3px rgba(255,255,255,.10),
+  0 0 22px rgba(255,79,216,.55),
+  0 0 40px rgba(56,246,255,.25);
+}
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer{
+  min-height: var(--footerH);
+  height: var(--footerH);
+  display:flex;
+  align-items:center;
+  border-top: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+  backdrop-filter: blur(10px);
+}
+.footer .wrap{
+  width:min(1280px, calc(100% - 24px));
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* =========================================================
+   MOBILE LAYOUT (INDEX)
+   ========================================================= */
+@media (max-width: 980px){
+  .appShell{
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: 12px;
+  }
+
+  .sidebar,
+  .mapWrap{ display:none; }
+
+  .resultsPane{
+    height: auto;
+    overflow: visible;
+  }
+
+  .resultsScroll{
+    overflow: visible;
+    padding: 0;
+  }
+
+  .pager{
+    margin-top: 12px;
+    border-radius: var(--r2);
+  }
+
+  .rLink{ grid-template-columns: 1fr; }
+  .rThumb{ min-height: 180px; }
+
+  .topbar .wrap{ flex-wrap:wrap; align-items:flex-start; }
+  .headerActions{
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    width:100%;
+    gap:10px;
+    margin-left: 0;
+  }
+  .headerActions > *{ flex: 1 1 calc(50% - 10px); }
+  .headerActions .rainbowReviewBtn,
+  .headerActions .neonSuggestBtn{ flex: 1 1 100%; }
+  .brand{ flex: 1 1 220px; min-width: 180px; }
+}
+
+/* =========================================================
+   MOBILE OVERLAYS
+   ========================================================= */
+.mobileOverlay{
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(8px);
+  display:none;
+  padding: 14px;
+}
+.mobileOverlay.is-open{ display:block; }
+
+.mobileSheet{
+  height: 100%;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(10,6,17,.92);
+  box-shadow: 0 24px 90px rgba(0,0,0,.45);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.mobileSheetHeader{
+  padding: 12px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 10px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(90deg, rgba(255,79,216,.18), rgba(56,246,255,.12));
+}
+.mobileSheetHeader .title{
+  font-family: var(--display);
+  letter-spacing:.4px;
+  font-size: 16px;
+}
+.mobileSheetHeader .close{
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+  padding: 10px 12px;
+  border-radius: 14px;
+  cursor:pointer;
+  font-weight: 900;
+}
+.mobileSheetBody{
+  padding: 12px;
+  overflow:auto;
+}
+
+/* Utilities */
+.muted{ color: var(--muted); }
+.small{ font-size: 12px; }
+.pad{ padding: 12px; }
+code{
+  padding: 2px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.25);
+  color: rgba(255,255,255,.92);
+}
+
+/* =========================================================
+   RESTAURANT PAGE STYLES
+   ========================================================= */
+.rShell{
+  width: min(1200px, calc(100% - 24px));
+  margin: 16px auto 0;
+  padding-bottom: 18px;
+}
+
+.rCrumbs{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 10px 4px 12px;
+}
+.rCrumbs a{
+  color: rgba(255,255,255,.90);
+  text-decoration:none;
+  border-bottom: 1px solid rgba(255,255,255,.18);
+}
+.rCrumbs a:hover{ border-bottom-color: rgba(255,79,216,.55); }
+
+/* Hero */
+.rHero{
+  position: relative;
+  overflow:hidden;
+  border-radius: var(--r2);
+}
+/* =========================================================
+   Restaurant Hero Image (Full-coverage neon filter)
+   ========================================================= */
+
+/* =========================================================
+   Restaurant Hero Image (Blacklight Neon Mode)
+   Dark base + glowing color accents
+   ========================================================= */
+
+.rHeroImg{
+  position: relative;
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  /* Darken and deepen the photo first */
+  filter:
+    brightness(.70)
+    contrast(1.15)
+    saturate(1.20);
+}
+
+/* Neon lighting layer */
+.rHeroImg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background:
+    /* Deep overall darkening (this is the key) */
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.35) 0%,
+      rgba(0,0,0,.75) 100%
+    ),
+
+    /* Pink glow pocket */
+    radial-gradient(
+      ellipse at 20% 20%,
+      rgba(255,79,216,.45) 0%,
+      rgba(255,79,216,.15) 40%,
+      transparent 70%
+    ),
+
+    /* Aqua glow pocket */
+    radial-gradient(
+      ellipse at 80% 10%,
+      rgba(56,246,255,.45) 0%,
+      rgba(56,246,255,.15) 40%,
+      transparent 70%
+    );
+
+  /* Normal blend keeps things dark and readable */
+  mix-blend-mode: normal;
+}
+.rHeroOverlay{
+  position:absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 18px 18px 14px;
+}
+.rTitle{
+  margin:0;
+  font-family: var(--restaurantFont, var(--display));
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing:.4px;
+  text-shadow:
+    0 2px 0 rgba(245, 0, 233, 0.8),
+    0 0 22px rgba(0, 184, 184, 0.80);
+}
+.rMetaLine{ margin-top: 6px; font-size: 13px; }
+.rTagRow{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 12px; }
+
+/* Main grid */
+.rGrid{
+  margin-top: 14px;
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap: 14px;
+}
+
+/* Left main panel */
+.rMain{ padding: 16px; }
+
+/* .sectionTitle{ font-family: var(--font); letter-spacing:.35px; font-weight: 800; font-size: 24px; margin: 0 0 10px; color: rgba(255,255,255,.95); text-shadow: 0 0 16px rgba(255,79,216,.14); } */
+/* =========================================================
+   Section Title: Animated Pink Glow Backdrop
+   ========================================================= */
+/* =========================================================
+   Section Title — Tight neon glow with visible animation
+   ========================================================= */
+
+.sectionTitle{
+  position: relative;
+  display: inline-block;
+  padding: 2px 2px;
+
+  font-family: var(--font);
+  letter-spacing: .35px;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 0 0 10px;
+  color: rgba(255,255,255,.96);
+
+  /* stronger readable neon text */
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.45),
+    0 0 10px rgba(255, 79, 217, 0.377),
+    0 0 22px rgba(255,79,216,.35);
+}
+
+/* tighter glow cloud */
+.sectionTitle::before{
+  content:"";
+  position:absolute;
+  inset: -8px -12px;          /* smaller glow area */
+  z-index: -1;
+
+  border-radius: 28px;        /* soft edge, not pill-shaped */
+
+  background:
+    radial-gradient(circle at 30% 50%,
+      rgba(255, 79, 217, 0.404) 0%,
+      rgba(255,79,216,.28) 40%,
+      transparent 75%
+    ),
+    radial-gradient(circle at 70% 50%,
+      rgba(255, 47, 193, 0.301) 0%,
+      rgba(255,47,191,.22) 45%,
+      transparent 80%
+    );
+
+  filter: blur(12px);
+  opacity: .9;
+
+  /* more noticeable motion */
+  animation: titleNeonPulse 2.4s ease-in-out infinite;
+}
+
+/* neon “power pulse” animation */
+@keyframes titleNeonPulse{
+  0%{
+    transform: scale(1);
+    filter: blur(10px) brightness(1);
+    opacity: .75;
+  }
+  40%{
+    transform: scale(1.05);
+    filter: blur(14px) brightness(1.3);
+    opacity: 1;
+  }
+  70%{
+    transform: scale(0.98);
+    filter: blur(11px) brightness(.9);
+    opacity: .85;
+  }
+  100%{
+    transform: scale(1);
+    filter: blur(10px) brightness(1);
+    opacity: .75;
+  }
+}
+
+/* motion safety */
+@media (prefers-reduced-motion: reduce){
+  .sectionTitle::before{ animation: none; }
+}
+
+.rReviewText{
+  line-height: 1.5;
+  font-size: 15px;
+  color: rgba(255,255,255,.92);
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 16px;
+  padding: 14px;
+}
+
+.rDivider{
+  height: 1px;
+  background: rgba(255,255,255,.10);
+  margin: 16px 0;
+}
+
+/* Reviews header row */
+.rReviewsHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+.rHeaderBtns{ display:flex; gap: 10px; flex-wrap:wrap; }
+
+/* Aggregate block */
+.rAgg{
+  margin-top: 12px;
+  display:grid;
+  grid-template-columns: 1fr 280px;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+}
+.rAggLeft{ display:flex; gap: 14px; align-items:center; }
+.rAggNum{ font-family: var(--display); font-size: 42px; line-height:1; }
+.rAggStars{ min-width: 180px; }
+
+.starBar{
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.starFill{
+  height:100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(255,79,216,.75), rgba(56,246,255,.55));
+}
+
+.rAggRight .filterLabel{ margin: 0 0 6px; }
+.rAggRight .filterSelect{ margin-bottom: 10px; }
+
+/* Breakdown */
+.rBreakdown{ display:grid; gap: 8px; margin-top: 12px; }
+.bdRow{ display:grid; grid-template-columns: 48px 1fr 36px; gap: 10px; align-items:center; }
+.bdLabel{ color: rgba(255,255,255,.85); font-size: 12px; }
+.bdBar{
+  height: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  overflow:hidden;
+}
+.bdFill{
+  height:100%;
+  width:0%;
+  background: linear-gradient(90deg, rgba(255,79,216,.70), rgba(186,255,58,.35));
+}
+.bdCount{ color: var(--muted); font-size: 12px; text-align:right; }
+
+/* Photo strip */
+.rPhotoStrip{ padding: 10px; border-radius: 18px; }
+.photoRow{ display:flex; gap: 10px; overflow:auto; padding-bottom: 6px; scroll-snap-type: x mandatory; }
+.photoItem{ margin:0; min-width: 150px; scroll-snap-align: start; }
+.photoItem img{
+  width: 150px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+}
+.photoItem figcaption{ margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+/* Reviews list */
+/* Reviews list */
+.rReviewsList{
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Review card (NO avatar) */
+.review{
+  width: 100%;
+  display: block;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+}
+
+/* top row: name/score left, date right */
+.reviewTop{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.reviewTopLeft{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.reviewName{
+  display: block;
+  width: 100%;
+    font-family: var(--font);
+  letter-spacing: .35px;
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0 0 10px;
+  color: rgba(0, 206, 189, 0.96);
+
+  /* stronger readable neon text */
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.45),
+    0 0 10px rgba(79, 232, 255, 0.608),
+    0 0 22px rgba(68, 0, 91, 0.749);
+
+  letter-spacing: .2px;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.reviewDate{
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.reviewRating{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.reviewText{
+  display: block;
+  width: 100%;
+  margin: 10px 0 0;
+  color: rgba(255,255,255,.92);
+  line-height: 1.55;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.rvPhotos{
+  margin-top: 10px;
+  display:flex;
+  gap: 8px;
+  flex-wrap:wrap;
+}
+
+.rvPhotos img{
+  width: 92px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+}
+/* Right sidebar */
+.rSide{
+  padding: 14px;
+  position: sticky;
+  top: calc(var(--headerH) + var(--gap));
+  height: calc(100vh - var(--headerH) - var(--footerH) - (var(--gap) * 2));
+  overflow:auto;
+}
+.rSideBlock{
+  padding: 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+  margin-bottom: 12px;
+}
+.sideTitle{
+  font-family: var(--display);
+  font-size: 14px;
+  letter-spacing:.35px;
+  margin: 0 0 10px;
+
+  
+}
+
+
+.avatarStub{
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 18%, rgba(255,79,216,.9) 35%, rgba(122,0,255,.9) 100%);
+  box-shadow:
+    0 0 0 3px rgba(0,0,0,.45),
+    0 0 18px rgba(255,79,216,.35),
+    0 0 24px rgba(56,246,255,.18);
+}
+.reviewBody{ min-width: 0; }
+/* Highlights and amenities */
+.highlight{
+  display:flex;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.05);
+  margin-bottom: 10px;
+}
+.hiIcon{
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(90deg, rgba(255,79,216,.14), rgba(56,246,255,.10));
+}
+.hiTitle{ font-weight: 900; margin-bottom: 2px; }
+.amenity{
+  padding: 9px 12px;
+  font-family: var(--font);
+  margin-bottom: 8px;
+  border-radius: 12px;
+
+  /* --- neon glass fill --- */
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,79,216,.28),
+      rgba(122,0,255,.22) 40%,
+      rgba(56,246,255,.24)
+    );
+
+  /* subtle inner light so it looks filled, not flat */
+  box-shadow:
+    inset 0 0 14px rgba(255,255,255,.08),
+    0 0 12px rgba(255,79,216,.18),
+    0 0 18px rgba(56,246,255,.12);
+
+  border: 1px solid rgba(255,255,255,.12);
+
+  /* readable neon text */
+  color: rgba(255,255,255,.95);
+  text-shadow:
+    0 1px 2px rgba(0,0,0,.85),
+    0 0 6px rgba(255,79,216,.25);
+}
+/* Neon submit bar (top pop) */
+.neonToast{
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  margin: 0 0 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.18);
+  background:
+    linear-gradient(90deg, rgba(255,79,216,.25), rgba(56,246,255,.18), rgba(186,255,58,.10)),
+    rgba(0,0,0,.22);
+  box-shadow:
+    0 14px 40px rgba(0,0,0,.38),
+    0 0 24px rgba(255,79,216,.22);
+  padding: 12px 14px;
+  backdrop-filter: blur(12px);
+}
+
+.neonToastRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.neonToastTitle{
+  font-weight: 900;
+  letter-spacing: .2px;
+  color: rgba(255,255,255,.96);
+  text-shadow:
+    0 2px 0 rgba(0,0,0,.5),
+    0 0 18px rgba(255,79,216,.25);
+}
+
+.neonToastSub{
+  font-size: 12px;
+  color: rgba(255,255,255,.75);
+  margin-top: 2px;
+}
+/* Mini map */
+.rMiniMap{
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  overflow:hidden;
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* ---------- Star rating picker ---------- */
+.starPicker{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(0,0,0,.18);
+}
+.starBtn{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease, box-shadow .12s ease;
+  user-select:none;
+  position: relative;
+}
+.starBtn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,79,216,.35);
+  box-shadow: 0 0 0 3px rgba(255,79,216,.12);
+}
+.starBtn:active{ transform: translateY(0); }
+.starBtn .starGlyph{
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+}
+.starBtn.is-on{
+  background: linear-gradient(90deg, rgba(255,79,216,.22), rgba(56,246,255,.14));
+  border-color: rgba(255,255,255,.22);
+}
+.starBtn.is-on .starGlyph{ text-shadow: 0 0 18px rgba(255,79,216,.28); }
+.starBtn.is-half::after{
+  content:"";
+  position:absolute;
+  inset: 0;
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(255,79,216,.22) 0 50%, transparent 50% 100%);
+  pointer-events:none;
+}
+.starRow{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+#starPicker{
+  display: flex;
+  gap: 4px;
+}
+
+.starBtn .starGlyph{
+  font-size: 22px;
+  line-height: 1;
+  color: #bfbfbf;   /* default gray */
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+  transition: color .15s ease, text-shadow .15s ease;
+}
+.starBtn.is-on .starGlyph{
+  color: #ff4fd8; /* neon pink */
+
+  text-shadow:
+    0 0 6px rgba(255,79,216,.8),
+    0 0 14px rgba(255,79,216,.6),
+    0 0 24px rgba(255,79,216,.4);
+}
+#ratingDisplay{
+  font-weight: 700;
+}
+/* Hide the boring default file input */
+.photoInput{
+  display: none;
+}
+
+/* Rainbow upload button */
+.rainbowBtn{
+    width:100%;
+  display: inline-block;
+  margin-top: 6px;
+  padding: 10px 16px;
+  font-weight: 800;
+  font-size: 27px;
+  font-family: var(--font);
+  letter-spacing: .3px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #fff;
+  text-shadow:2px 2px 0 #000,
+  -2px 2px 0 #000,
+  2px -2px 0 #000,
+  -2px -2px 0 #000,
+  0 2px 0 #000,
+  0 -2px 0 #000,
+  2px 0 0 #000,
+  -2px 0 0 #000,
+
+  /* --- NEON PINK INNER GLOW --- */
+  0 0 22px rgb(255, 230, 250),
+
+  /* --- TURQUOISE OUTER GLOW --- */
+  0 0 22px rgba(255, 209, 249, 0.7);
+
+  /* Rainbow gradient */
+  background: linear-gradient(
+    270deg,
+    #dc2affce,
+    #00ddc0,
+    #ff00dd,
+    #a90ae7,
+    #00cfff,
+    #7a5cff,
+    #ff00dd
+  );
+  background-size: 600% 600%;
+
+  /* Glow */
+  box-shadow: 0 0 12px rgba(255, 42, 109, .6),
+              0 0 20px rgba(122, 92, 255, .4);
+
+  animation: rainbowShift 6s ease infinite;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.rainbowBtn:hover{
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(255, 42, 109, .8),
+              0 0 28px rgba(0, 207, 255, .6);
+}
+
+.rainbowBtn:active{
+  transform: scale(0.98);
+}
+
+/* Moving rainbow animation */
+@keyframes rainbowShift{
+  0%{background-position: 0% 50%;}
+  50%{background-position: 100% 50%;}
+  100%{background-position: 0% 50%;}
+}
+
+/* =========================================================
+   BIG OBNOXIOUS CTA BUTTONS
+   ========================================================= */
+.rainbowReviewBtn{
+  position: relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing:.2px;
+  text-decoration:none;
+text-shadow:
+  0 2px 0 rgba(0,0,0,.6),      /* subtle depth */
+  1px 1px 0 rgba(0,0,0,.7),
+  -1px 1px 0 rgba(0,0,0,.7),
+  1px -1px 0 rgba(0,0,0,.7),
+  -1px -1px 0 rgba(0,0,0,.7),
+  0 0 10px rgba(0,0,0,.6);
+  color: rgba(255,255,255,.96);
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(0,0,0,.22);
+  box-shadow: 0 14px 34px rgba(0,0,0,.35);
+  overflow:hidden;
+  transform: translateZ(0);
+}
+.rainbowReviewBtn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius: 999px;
+  background:
+    conic-gradient(from 90deg,
+      var(--pink), var(--violet), var(--aqua), var(--lime), var(--sun), var(--pink));
+  filter: blur(10px);
+  opacity: .85;
+  animation: rainbowSpin 2.2s linear infinite;
+  z-index: -1;
+}
+.rainbowReviewBtn::after{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, rgba(255,79,216,.20), rgba(56,246,255,.12), rgba(186,255,58,.10));
+  opacity: .55;
+  z-index: -1;
+}
+@keyframes rainbowSpin{ to{ transform: rotate(360deg); } }
+.rainbowReviewBtn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,79,216,.45);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.40),
+    0 0 0 4px rgba(255,79,216,.12),
+    0 0 26px rgba(56,246,255,.18);
+}
+.rainbowReviewBtn:active{ transform: translateY(0); filter: brightness(.98); }
+
+.neonSuggestBtn{
+  position: relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  padding: 11px 14px;
+  border-radius: 999px;
+  font-weight: 900;
+  letter-spacing:.2px;
+  text-decoration:none;
+  color: #fff;
+
+  border: 1px solid rgba(255,255,255,.25);
+  background: linear-gradient(90deg, rgba(255,79,216,.22), rgba(255,47,191,.18));
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.35),
+    0 0 18px rgba(255,79,216,.28);
+
+  overflow:hidden;
+  transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+}
+.neonSuggestBtn::before{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:999px;
+  background: radial-gradient(circle at 50% 50%, rgba(255,79,216,.7), transparent 60%);
+  filter: blur(12px);
+  opacity:.75;
+  z-index:-1;
+}
+.neonSuggestBtn:hover{
+  transform: translateY(-1px);
+  border-color: rgba(255,79,216,.55);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,.40),
+    0 0 0 4px rgba(255,79,216,.12),
+    0 0 32px rgba(255,79,216,.35);
+}
+.neonSuggestBtn:active{ transform: translateY(0); filter: brightness(.98); }
+
+@keyframes pinkPulse{
+  0%,100%{
+    box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 0 18px rgba(255,79,216,.28);
+  }
+  50%{
+    box-shadow: 0 12px 30px rgba(0,0,0,.35), 0 0 30px rgba(255,79,216,.45);
+  }
+}
+.neonSuggestBtn{ animation: pinkPulse 3s ease-in-out infinite; }
+
+/* ---------- Card rating row ---------- */
+.rRatingRow{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  margin-top: 6px;
+  color: rgba(255,255,255,.92);
+}
+.rStars{
+  position: relative;
+  width: 108px;
+  height: 18px;
+  line-height: 18px;
+  flex: 0 0 auto;
+}
+.rStars .starsBase,
+.rStars .starsFill{
+  position:absolute;
+  top:0; left:0;
+  height: 18px;
+  overflow:hidden;
+  white-space:nowrap;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.rStars .starsBase{ color: rgba(255,255,255,.25); }
+.rStars .starsFill{
+  width: 0%;
+  color: rgba(255,79,216,.95);
+  text-shadow: 0 0 16px rgba(255,79,216,.22);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,.35));
+}
+.rRatingMeta{
+  display:flex;
+  align-items:center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.rRatingMeta .avg{ color: rgba(255,255,255,.92); font-weight: 900; }
+.rRatingMeta .dot{ opacity:.65; }
+
+/* motion safety */
+@media (prefers-reduced-motion: reduce){
+  .neonSuggestBtn{ animation: none; }
+  .rainbowReviewBtn::before{ animation: none; }
+}
+
+/* ---------- visibility helpers ---------- */
+.mobileOnly{ display:none; }
+.desktopOnly{ display:inline-flex; }
+@media (max-width: 980px){
+  .mobileOnly{ display:inline-flex; }
+  .desktopOnly{ display:none; }
+}
+
+/* Restaurant page mobile */
+@media (max-width: 980px){
+  .rShell{ width: calc(100% - 24px); }
+  .rHeroImg{ height: 240px; }
+  .rGrid{ grid-template-columns: 1fr; }
+  .rSide{ position: static; height: auto; }
+  .rAgg{ grid-template-columns: 1fr; }
+  .rTitle{ font-size: 28px; }
+}
+
+/* Bigger container, two-row layout */
+.rAgg{
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.18);
+}
+
+/* Top row: avg left, breakdown right */
+.rAggTop{
+  display: grid;
+  grid-template-columns: 1.05fr .95fr;
+  gap: 18px;
+  align-items: start;
+}
+
+/* Make avg area feel bigger */
+.rAggLeft{
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.rAggNum{
+  font-family: var(--display);
+  font-size: 56px; /* bigger */
+  line-height: 1;
+}
+
+/* Breakdown gets more breathing room */
+.rBreakdown{
+  display: grid;
+  gap: 10px;
+  margin-top: 0;
+}
+
+.bdRow{
+  display: grid;
+  grid-template-columns: 58px 1fr 44px; /* roomier */
+  gap: 12px;
+  align-items: center;
+}
+
+.bdBar{ height: 12px; } /* slightly thicker */
+.bdLabel{ font-size: 12px; }
+.bdCount{ font-size: 12px; }
+
+/* Filters row under the ratings */
+.rAggFilters{
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 14px;
+  align-items: end;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.10);
+}
+
+.rAggFilterGroup{ min-width: 0; }
+
+.rAggCheck{
+  margin: 0;
+  align-self: end;
+  white-space: nowrap;
+}
+
+/* Mobile: stack nicely */
+@media (max-width: 980px){
+  .rAggTop{ grid-template-columns: 1fr; }
+  .rAggLeft{ grid-template-columns: 1fr; }
+  .rAggFilters{ grid-template-columns: 1fr; }
+  .rAggNum{ font-size: 44px; }
+}

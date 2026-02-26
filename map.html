@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelhole • Map</title>
+
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="./index.html" aria-label="Back to restaurants">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <div class="name">bagelhole</div>
+          <span class="sub">full map view</span>
+        </div>
+      </a>
+
+      <div class="headerActions">
+        <a class="pillBtn" href="./index.html">← Back</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Full page map container -->
+  <main class="fullMapShell">
+    <div id="fullMap"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>Map view • click a pin to open the restaurant</div>
+      <div>bagelhole</div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/map.js"></script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "updatedAt": "2026-02-26T00:00:00Z",
+  "pending": [
+    {
+      "id": "sug_0001",
+      "createdAt": "2026-02-26T00:00:00Z",
+      "status": "pending",
+      "submitter": "anonymous",
+      "placeName": "Example Diner",
+      "locationText": "123 Fake St, Norfolk, VA",
+      "neighborhood": "Downtown",
+      "price": "$$",
+      "website": "https://example.com",
+      "tags": ["breakfast", "late night", "greasy spoon"],
+      "why": "Open at 2am, pancakes taste like a hug, bathroom vibes are haunted (good haunted).",
+      "hero": {
+        "type": "url",
+        "value": "./img/example.jpg"
+      },
+      "geo": {
+        "lat": 36.8508,
+        "lng": -76.2859
+      }
+    }
+  ],
+  "approved": [
+    {
+      "id": "sug_0000",
+      "createdAt": "2026-02-20T00:00:00Z",
+      "approvedAt": "2026-02-21T00:00:00Z",
+      "status": "approved",
+      "submitter": "kat",
+      "placeName": "Approved Example Pizza",
+      "locationText": "99 Crust Ave, Norfolk, VA",
+      "neighborhood": "Ghent",
+      "price": "$$",
+      "website": "",
+      "tags": ["pizza", "beer"],
+      "why": "This belongs on the list. If it closes, I will write a manifesto.",
+      "hero": {
+        "type": "url",
+        "value": "./img/pizza.jpg"
+      },
+      "geo": {
+        "lat": 36.852,
+        "lng": -76.289
+      },
+      "notes": "Approved by mod. Verified address."
+    }
+  ],
+  "rejected": []
+}

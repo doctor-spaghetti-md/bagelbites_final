@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelbites • Submit a Restaurant Suggestion</title>
+  <meta name="description" content="Suggest a restaurant for Bagelbites. Submissions go to moderation." />
+
+  <!-- Base fonts (same as site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Cherry+Bomb+One&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="../index.html" aria-label="Back to restaurants">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <div class="name">bagelbites</div>
+          <!-- <span class="sub">submit a suggestion (incoming tip)</span> -->
+        </div>
+      </a>
+
+      <div class="headerActions">
+        <a class="pillBtn" href="../index.html" style="text-decoration:none;">← Back</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="rShell" style="width:min(980px, calc(100% - 24px));">
+    <nav class="rCrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Restaurants</a>
+      <span class="muted">/</span>
+      <span>Submit Suggestion</span>
+    </nav>
+
+    <section class="panel rMain">
+      <h1 class="filterTitle" style="font-size:36px; margin-top:0;">Submit a Restaurant Suggestion</h1>
+      <p class="muted" style="margin-top:0;">
+        These go into moderation first. If we approve it, it gets added to the list (with your eternal gratitude).
+      </p>
+
+      <div id="notice" class="emptyState" style="display:none;"></div>
+
+      <form id="suggestForm" class="filterBlock" autocomplete="on" novalidate>
+
+        <label class="filterLabel" for="placeName">Restaurant name</label>
+        <input id="placeName" class="filterInput" type="text" maxlength="80"
+               placeholder="Cracker Barrel (but make it suspicious)" required />
+
+        <label class="filterLabel" for="locationText">Address or general location</label>
+        <input id="locationText" class="filterInput" type="text" maxlength="140"
+               placeholder="123 Main St, Norfolk VA (or ‘near the big haunted Walgreens’)" required />
+
+        <div class="filterRow" style="margin-top:12px;">
+          <div style="flex:1 1 220px;">
+            <label class="filterLabel" for="neighborhood">Neighborhood (optional)</label>
+            <input id="neighborhood" class="filterInput" type="text" maxlength="60"
+                   placeholder="Ghent / Downtown / Whatever the vibes are" />
+          </div>
+
+          <div style="flex:0 0 170px; min-width:160px;">
+            <label class="filterLabel" for="price">Price (optional)</label>
+            <select id="price" class="filterSelect">
+              <option value="">Select…</option>
+              <option value="$">$</option>
+              <option value="$$">$$</option>
+              <option value="$$$">$$$</option>
+              <option value="$$$$">$$$$</option>
+            </select>
+          </div>
+        </div>
+
+        <label class="filterLabel" for="website">Website / Instagram (optional)</label>
+        <input id="website" class="filterInput" type="url" maxlength="200"
+               placeholder="https://… or @theirhandle" />
+
+        <label class="filterLabel" for="tags">Tags (optional)</label>
+        <input id="tags" class="filterInput" type="text" maxlength="120"
+               placeholder="pizza, divey, bagels, romantic, cursed" />
+        <div class="muted small" style="margin-top:6px;">
+          Separate with commas. We’ll clean it up in moderation.
+        </div>
+
+        <label class="filterLabel" for="why">Why are you suggesting it?</label>
+        <textarea id="why" class="neonInput" rows="5" maxlength="1200"
+                  placeholder="i used to see her at basketball games" required
+                  style="resize:vertical;"></textarea>
+
+        <div class="muted small" id="whyCount" style="margin-top:6px;">0 / 900</div>
+
+        <label class="filterLabel" for="heroPhoto">Attach a photo (optional)</label>
+        <input id="heroPhoto" type="file" accept="image/*" />
+        <div class="muted small" style="margin-top:6px;">
+          One photo max (hero image). Prototype mode stores it locally.
+        </div>
+
+        <div id="heroPreview" style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;"></div>
+
+        <div class="filterActions" style="margin-top:16px;">
+          <button id="btnSubmit" class="btn" type="submit">Submit for Moderation</button>
+          <button id="btnClear" class="pillBtn" type="button">Clear</button>
+        </div>
+
+        <div class="muted small" style="margin-top:10px;">
+          Prototype note: this page can save to localStorage for now, then later you swap in real moderation storage.
+        </div>
+      </form>
+    </section>
+
+    <!-- Moderator tools (hidden unless enabled) -->
+    <section id="modPanel" class="panel rMain" style="margin-top:14px;display:none;">
+      <h2 class="sectionTitle">Moderator Panel</h2>
+      <p class="muted" style="margin-top:0;">
+        Pending suggestions live here.
+      </p>
+
+      <div class="filterRow" style="margin:0 0 10px;">
+        <button id="btnModOff" class="pillBtn" type="button">Turn Mod Mode Off</button>
+        <button id="btnPurgePending" class="pillBtn" type="button">Purge ALL Pending</button>
+      </div>
+
+      <div id="pendingList" class="rReviewsList"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>© 2001 Bagelhole.</div>
+      <div class="sig">bagelhole</div>
+    </div>
+  </footer>
+
+  <script>
+    // simple counters + previews (no backend yet)
+    const why = document.getElementById("why");
+    const whyCount = document.getElementById("whyCount");
+    const heroPhoto = document.getElementById("heroPhoto");
+    const heroPreview = document.getElementById("heroPreview");
+
+    function updateWhyCount(){
+      if (!why || !whyCount) return;
+      whyCount.textContent = `${why.value.length} / 900`;
+    }
+    why?.addEventListener("input", updateWhyCount);
+    updateWhyCount();
+
+    heroPhoto?.addEventListener("change", () => {
+      heroPreview.innerHTML = "";
+      const file = heroPhoto.files?.[0];
+      if (!file) return;
+
+      const url = URL.createObjectURL(file);
+      const img = document.createElement("img");
+      img.src = url;
+      img.alt = "Suggested hero preview";
+      img.style.width = "180px";
+      img.style.height = "130px";
+      img.style.objectFit = "cover";
+      img.style.borderRadius = "14px";
+      img.style.border = "1px solid rgba(255,255,255,.14)";
+
+      const cap = document.createElement("div");
+      cap.className = "muted small";
+      cap.style.maxWidth = "420px";
+      cap.innerHTML = `Preview only. (Prototype storage is local.)`;
+
+      heroPreview.appendChild(img);
+      heroPreview.appendChild(cap);
+    });
+  </script>
+
+  <script src="../js/suggestion.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+[
+  {
+    "id": "cracker-barrel",
+    "name": "Cracker Barrel",
+    "locationText": "middle of highway i promise",
+    "neighborhood": "Middle of Highway",
+    "price": "$$",
+    "lat": 36.9,
+    "lng": -76.25,
+
+    "tags": ["cat sweater", "puck cucks", "cuckle bucksp"],
+    "amenities": ["parking lot?", "pictures", "cat sweater", "c"],
+
+    "features": {
+      "bar": false,
+      "delivery": false,
+      "patio": false,
+      "vegan": false,
+      "latenight": false
+    },
+
+    "fontGoogle": "Inter",
+    "hero": "./img/cb.jpg",
+    
+
+    "bagelholeReview": "full review from bagelhead holequarters",
+
+    "highlights": [
+      { "icon": "🥞", "title": "text", "desc": "fuck" },
+      { "icon": "🪑", "title": "text", "desc": "crack." }
+    ],
+
+    "initialReviews": [
+      {
+        "id": "bhq-001",
+        "name": "Bagelhole HQ",
+        "rating": 2,
+        "text": "Our review (the first review). Lorem ipsum.",
+        "photos": [],
+        "createdAt": "2026-02-01"
+      },
+
+          {      
+              "id": "rev_0002",
+      "author": "anonymous",
+      "rating": 4.0,
+      "text": "piss",
+      "photos": [
+        { "type": "url", "value": "./img/cb2.jpg" },
+        { "type": "url", "value": "./img/cb3.jpg" }
+      ],
+    "createdAt": "2026-02-14"}
+    ]
+  }
+]

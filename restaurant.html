@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelhole • Restaurant</title>
+  <meta name="description" content="Bagelhole restaurant page: review, highlights, amenities, map, and evidence." />
+
+  <!-- Base fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Cherry+Bomb+One&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <!-- Restaurant-specific font gets swapped in by JS -->
+  <link id="restaurantFontLink" rel="stylesheet" href="">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="./index.html" aria-label="Back to restaurants">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <div class="name">bagelbites</div>
+        </div>
+      </a>
+
+      <div class="headerActions">
+        <a class="pillBtn" href="./index.html" style="text-decoration:none;">← Back</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Page -->
+  <main class="rShell" role="main">
+
+    <!-- Breadcrumb -->
+    <nav class="rCrumbs" aria-label="Breadcrumb">
+      <a href="./index.html">Restaurants</a>
+      <span class="muted">/</span>
+      <span id="crumbName">…</span>
+    </nav>
+
+    <!-- Hero -->
+    <section class="rHero panel">
+      <div id="heroImg" class="rHeroImg" aria-label="Restaurant photo"></div>
+      <div class="rHeroOverlay">
+        <h1 id="rName" class="rTitle">Restaurant</h1>
+        <div id="rMeta" class="rMetaLine muted">Location • Price</div>
+        <div id="tagRow" class="rTagRow" aria-label="Tags"></div>
+      </div>
+    </section>
+
+    <!-- Main grid -->
+    <section class="rGrid">
+
+      <!-- Main column -->
+      <article class="panel rMain">
+        <h2 class="filterTitle">Bagelhole Review</h2>
+        <div id="bagelholeReview" class="rReviewText" data-firstline="" data-hero="">
+          Loading review…
+        </div>
+
+        <div class="rDivider"></div>
+
+        <div class="rReviewsHeader">
+          <div>
+            <div class="filterTitle" style="margin:0;">Reviews</div>
+            <div id="reviewHeaderMeta" class="muted small pad">—</div>
+          </div>
+          <div class="rHeaderBtns">
+            <a id="btnWriteReview" class="rainbowReviewBtn" href="./assets/writereview.html">
+              Write Review
+            </a>
+            <!-- <button id="btnAddPhotos" class="pillBtn" type="button">📷 Add Photos</button> -->
+          </div>
+        </div>
+
+        <!-- ratings (avg + breakdown) -->
+<div class="rAgg">
+  <div class="rAggTop">
+    <!-- left: overall -->
+    <div class="rAggLeft">
+      <div class="rAggNum">
+        <span id="avgNum">No ratings yet</span>
+      </div>
+
+      <div class="rAggStars">
+        <div class="starBar" aria-hidden="true">
+          <div id="avgFill" class="starFill" style="width:0%"></div>
+        </div>
+        <div id="revCount" class="muted small">Be the first to review</div>
+      </div>
+    </div>
+
+    <!-- right: breakdown -->
+    <div id="breakdown" class="rBreakdown"></div>
+  </div>
+
+  <!-- filters UNDER the big ratings container -->
+  <div class="rAggFilters">
+    <div class="rAggFilterGroup">
+      <label class="filterLabel" for="sortReviews">Sort</label>
+      <select id="sortReviews" class="filterSelect">
+        <option value="newest">Newest</option>
+        <option value="highest">Highest</option>
+        <option value="lowest">Lowest</option>
+        <option value="photos">Most photos</option>
+      </select>
+    </div>
+
+    <div class="rAggFilterGroup">
+      <label class="filterLabel" for="filterStars">Stars</label>
+      <select id="filterStars" class="filterSelect">
+        <option value="all">All</option>
+        <option value="5">5</option>
+        <option value="4">4</option>
+        <option value="3">3</option>
+        <option value="2">2</option>
+        <option value="1">1</option>
+      </select>
+    </div>
+
+    <label class="check rAggCheck">
+      <input type="checkbox" id="onlyPhotos" />
+      <span>Only with photos</span>
+    </label>
+  </div>
+</div>
+
+        <!-- photo strip -->
+        <div class="rDivider"></div>
+        <h3 class="filterTitle">Photos</h3>
+        <div id="photoStrip" class="rPhotoStrip panel">
+          <div class="pad muted">none…</div>
+        </div>
+
+        <!-- reviews list -->
+        <div class="rDivider"></div>
+        <div id="reviewsList" class="rReviewsList"></div>
+      </article>
+
+      <!-- Sidebar -->
+      <aside class="panel rSide">
+        <div class="rSideBlock">
+          <div class="sectionTitle">Highlights</div>
+          <div id="highlights"></div>
+        </div>
+
+        <div class="rSideBlock">
+          <div class="sectionTitle">Amenities</div>
+          <div id="amenities"></div>
+        </div>
+
+        <div class="rSideBlock">
+          <div class="sectionTitle">Map</div>
+          <div id="rMap" class="rMiniMap"></div>
+        </div>
+      </aside>
+
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="wrap">
+      <div>© <span id="year"></span> Bagelhole.</div>
+      <div class="sig">bagelhole</div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="./js/restaurant.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bagelbites • Write a Review</title>
+  <meta name="description" content="Write a Bagelhole review. Photos optional. Submissions go to moderation." />
+
+  <!-- Base fonts (same as site) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Cherry+Bomb+One&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="../index.html" aria-label="Back to restaurants">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <div class="name">bagelbites</div>
+          <!-- <span class="sub">write a review (evidence submission)</span> -->
+        </div>
+      </a>
+
+      <div class="headerActions">
+        <a class="pillBtn" href="../index.html" style="text-decoration:none;">← Back</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="rShell" style="width:min(980px, calc(100% - 24px));">
+    <nav class="rCrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Restaurants</a>
+      <span class="muted">/</span>
+      <span>Write Review</span>
+    </nav>
+
+    <section class="panel rMain">
+      <h1 class="filterTitle" style="font-size:36px; margin-top:0;">Write a Review</h1>
+      <p class="muted" style="margin-top:0;">
+        Submissions go into moderation first. Approved reviews appear publicly.
+      </p>
+
+      <div id="notice" class="emptyState" style="display:none;"></div>
+
+      <form id="reviewForm" class="filterBlock" autocomplete="on" novalidate>
+
+        <label class="filterLabel" for="restaurantSelect">Which place?</label>
+        <select id="restaurantSelect" class="filterSelect" required>
+          <option value="">Loading restaurants…</option>
+        </select>
+        <div class="muted small" id="lockedHint" style="display:none;margin-top:6px;">
+          Restaurant selected from the page you came from.
+        </div>
+
+        <label class="filterLabel" for="displayName">Your name</label>
+        <input id="displayName" class="filterInput" type="text" maxlength="40" placeholder="matt gaetz" required />
+
+<label class="filterLabel">Rating</label>
+
+<div class="starRow">
+  <div id="starPicker"></div>
+  <span class="filterTitle" style="cursor:default;user-select:none;margin-left:8px;">
+    <span id="ratingLabel" style="font-weight:900;">—</span><span class="muted">/ 5</span>
+  </span>
+  </div>
+</div>
+
+<input type="hidden" id="rating" name="rating">
+
+</div>
+        </div>
+        <!-- <div class="muted small" style="margin-top:6px;">Half-stars allowed. Be honest. Be weird.</div> -->
+
+        <label class="filterLabel" for="reviewText">Your review</label>
+<textarea id="reviewText"
+  class="neonInput"
+  rows="6"
+  maxlength="1200"
+  placeholder="i used to see her at basketball games"
+  required
+  style="resize:vertical;"></textarea>
+        <div class="muted small" id="charCount" style="margin-top:6px;">0 / 1200</div>
+
+<label class="muted small photoHelp" for="photos">Attach photos (optional)</label>
+
+<input id="photos" type="file" accept="image/*" multiple class="photoInput" />
+
+<label for="photos" class="btn">
+  + Add Photos
+</label>
+
+<div class="muted small" style="margin-top:25px; margin-bottom:12px;">
+          Max 4 photos.
+        </div>
+
+        <div id="photoPreview" style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;"></div>
+
+        <div class="filterActions" style="margin-top:16px;">
+          <button id="btnSubmit" class="rainbowBtn" type="submit">Submit for Moderation</button>
+          <!-- <button id="btnClear" class="pillBtn" type="button">Clear</button> -->
+        </div>
+
+        <!-- <div class="muted small" style="margin-top:10px;">
+          This is currently using localStorage (prototype). When you go live, we swap the storage layer, not the form.
+        </div> -->
+      </form>
+    </section>
+
+    <!-- Moderator tools (hidden unless enabled) -->
+    <section id="modPanel" class="panel rMain" style="margin-top:14px;display:none;">
+      <h2 class="sectionTitle">Moderator Panel</h2>
+      <p class="muted" style="margin-top:0;">
+        lorem
+      </p>
+
+      <div class="filterRow" style="margin:0 0 10px;">
+        <button id="btnModOff" class="pillBtn" type="button">Turn Mod Mode Off</button>
+        <button id="btnPurgePending" class="pillBtn" type="button">Purge ALL Pending</button>
+      </div>
+
+      <div id="pendingList" class="rReviewsList"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div>© 2001 Bagelhole.</div>
+      <div class="sig">bagelhole</div>
+    </div>
+  </footer>
+<div id="reviewSuccess" class="successCard" hidden></div>
+
+  <script src="../js/writereview.js"></script>
+</body>
+</html>
