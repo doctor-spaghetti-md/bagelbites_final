@@ -205,7 +205,7 @@ button, input, select{
 .brand .name{
   font-family: var(--brand);
   letter-spacing: 1.3px;
-  font-size: 72px;
+font-size: clamp(36px, 6vw, 72px);
   line-height:1;
   text-shadow:
   0 2px 0 rgba(0,0,0,.6),      /* subtle depth */
@@ -1889,4 +1889,5 @@ text-shadow:
   .rAggLeft{ grid-template-columns: 1fr; }
   .rAggFilters{ grid-template-columns: 1fr; }
   .rAggNum{ font-size: 44px; }
+
 }
