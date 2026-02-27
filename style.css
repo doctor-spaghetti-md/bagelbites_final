@@ -203,7 +203,7 @@ button, input, select{
 }
 
 .brand .name{
-  font-family: var(--brand);
+  font-family: var(-bungee);
   letter-spacing: 1.3px;
 font-size: clamp(36px, 6vw, 72px);
   line-height:1;
@@ -1904,3 +1904,4 @@ text-shadow:
       0 0 14px rgba(0, 224, 206, 0.45);
   }
 }
+
