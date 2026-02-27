@@ -9,7 +9,7 @@
    ========================================================= */
 
 /* ---------- Google fonts (optional; safe if already in HTML) ---------- */
-@import url("https://fonts.googleapis.com/css2?family=Frijole&family=Bungee&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&family=Bangers&family=Borel&family=Bungee&family=Cherry+Bomb+One&family=Chewy&family=Dancing+Script:wght@400..700&family=Emilys+Candy&family=Frijole&family=Gloria+Hallelujah&family=Homemade+Apple&family=IM+Fell+DW+Pica:ital@0;1&family=Indie+Flower&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Knewave&family=Life+Savers:wght@400;700;800&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Luckiest+Guy&family=Meow+Script&family=Monofett&family=Mouse+Memoirs&family=Orbitron:wght@400..900&family=Pacifico&family=Permanent+Marker&family=Playwrite+US+Trad:wght@100..400&family=Rammetto+One&family=Ribeye&family=Righteous&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rock+3D&family=Rock+Salt&family=Sacramento&family=Satisfy&family=Shadows+Into+Light&family=Sour+Gummy:ital,wght@0,100..900;1,100..900&family=Special+Elite&family=TikTok+Sans:opsz,wght@12..36,300..900&family=Twinkle+Star&family=Ultra&display=swap");
 
 :root{
   /* core */
@@ -1904,4 +1904,5 @@ text-shadow:
       0 0 14px rgba(0, 224, 206, 0.45);
   }
 }
+
 
