@@ -42,7 +42,7 @@
     <section class="panel rMain">
       <h1 class="filterTitle" style="font-size:36px; margin-top:0;">Submit a Restaurant Suggestion</h1>
       <p class="muted" style="margin-top:0;">
-        These go into moderation first. If we approve it, it gets added to the list (with your eternal gratitude).
+        These go into moderation first.
       </p>
 
       <div id="notice" class="emptyState" style="display:none;"></div>
@@ -51,17 +51,17 @@
 
         <label class="filterLabel" for="placeName">Restaurant name</label>
         <input id="placeName" class="filterInput" type="text" maxlength="80"
-               placeholder="Cracker Barrel (but make it suspicious)" required />
+               placeholder="Cracker Barrel " required />
 
         <label class="filterLabel" for="locationText">Address or general location</label>
         <input id="locationText" class="filterInput" type="text" maxlength="140"
-               placeholder="123 Main St, Norfolk VA (or ‘near the big haunted Walgreens’)" required />
+               placeholder="123 Main St, Norfolk VA )" required />
 
         <div class="filterRow" style="margin-top:12px;">
           <div style="flex:1 1 220px;">
             <label class="filterLabel" for="neighborhood">Neighborhood (optional)</label>
             <input id="neighborhood" class="filterInput" type="text" maxlength="60"
-                   placeholder="Ghent / Downtown / Whatever the vibes are" />
+                   placeholder="???" />
           </div>
 
           <div style="flex:0 0 170px; min-width:160px;">
@@ -84,7 +84,7 @@
         <input id="tags" class="filterInput" type="text" maxlength="120"
                placeholder="pizza, divey, bagels, romantic, cursed" />
         <div class="muted small" style="margin-top:6px;">
-          Separate with commas. We’ll clean it up in moderation.
+         mhm
         </div>
 
         <label class="filterLabel" for="why">Why are you suggesting it?</label>
@@ -97,7 +97,7 @@
         <label class="filterLabel" for="heroPhoto">Attach a photo (optional)</label>
         <input id="heroPhoto" type="file" accept="image/*" />
         <div class="muted small" style="margin-top:6px;">
-          One photo max (hero image). Prototype mode stores it locally.
+          One photo max (hero image).
         </div>
 
         <div id="heroPreview" style="margin-top:10px;display:flex;gap:10px;align-items:flex-start;"></div>
@@ -108,7 +108,7 @@
         </div>
 
         <div class="muted small" style="margin-top:10px;">
-          Prototype note: this page can save to localStorage for now, then later you swap in real moderation storage.
+          Prototype note: this page can save to localStorage for now
         </div>
       </form>
     </section>
@@ -180,3 +180,4 @@
 </body>
 
 </html>
+
